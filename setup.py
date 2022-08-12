@@ -15,42 +15,7 @@
 # limitations under the License.
 from setuptools import setup
 
-import versioneer
-
-DESCRIPTION = """empyrical is a Python library with performance and risk \
-statistics commonly used in quantitative finance"""
-LONG_DESCRIPTION = """empyrical is a Python library with performance and risk
-statistics commonly used in quantitative finance by `Quantopian Inc`_.
-
-.. _Quantopian Inc: https://www.quantopian.com
-.. _Zipline: https://zipline.io
-.. _pyfolio: https://quantopian.github.io/pyfolio/
-"""
-MAINTAINER = "Quantopian Inc"
-MAINTAINER_EMAIL = "opensource@quantopian.com"
-AUTHOR = "Quantopian Inc"
-AUTHOR_EMAIL = "opensource@quantopian.com"
-URL = "https://github.com/quantopian/empyrical"
-LICENSE = "Apache License, Version 2.0"
-
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 2",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 2.7",
-    "Programming Language :: Python :: 3.4",
-    "Programming Language :: Python :: 3.5",
-    "License :: OSI Approved :: Apache Software License",
-    "Intended Audience :: Science/Research",
-    "Topic :: Scientific/Engineering",
-    "Topic :: Scientific/Engineering :: Mathematics",
-    "Operating System :: OS Independent",
-]
-
-
 test_reqs = ["nose>=1.3.7", "parameterized>=0.6.1"]
-
 
 requirements = ["numpy>=1.9.2", "pandas>=0.16.1", "six", "pandas-datareader>=0.2"]
 
@@ -60,18 +25,7 @@ extras_requirements = {"dev": ["nose==1.3.7", "parameterized==0.6.1", "flake8==2
 if __name__ == "__main__":
     setup(
         name="merq_empyrical_noscipy",
-        cmdclass=versioneer.get_cmdclass(),
-        version="1.0.0",
-        maintainer=MAINTAINER,
-        maintainer_email=MAINTAINER_EMAIL,
-        description=DESCRIPTION,
-        license=LICENSE,
-        url=URL,
-        long_description=LONG_DESCRIPTION,
-        packages=["empyrical", "empyrical.tests"],
-        classifiers=classifiers,
+        version="1.0.1",
+        packages=["empyrical"],
         install_requires=requirements,
-        extras_require=extras_requirements,
-        tests_require=test_reqs,
-        test_suite="nose.collector",
     )
