@@ -19,7 +19,6 @@ import math
 import pandas as pd
 import numpy as np
 from math import pow
-from scipy import stats, optimize
 from six import iteritems
 from sys import float_info
 
@@ -1468,36 +1467,6 @@ def beta_aligned(returns, factor_returns, risk_free=0.0, out=None):
 roll_beta_aligned = _create_binary_vectorized_roll_function(beta_aligned)
 
 
-def stability_of_timeseries(returns):
-    """Determines R-squared of a linear fit to the cumulative
-    log returns. Computes an ordinary least squares linear fit,
-    and returns R-squared.
-
-    Parameters
-    ----------
-    returns : pd.Series or np.ndarray
-        Daily returns of the strategy, noncumulative.
-        - See full explanation in :func:`~empyrical.stats.cum_returns`.
-
-    Returns
-    -------
-    float
-        R-squared.
-
-    """
-    if len(returns) < 2:
-        return np.nan
-
-    returns = np.asanyarray(returns)
-    returns = returns[~np.isnan(returns)]
-
-    cum_log_returns = np.log1p(returns).cumsum()
-    rhat = stats.linregress(np.arange(len(cum_log_returns)),
-                            cum_log_returns)[2]
-
-    return rhat ** 2
-
-
 def tail_ratio(returns):
     """Determines the ratio between the right (95%) and left tail (5%).
 
@@ -1810,26 +1779,6 @@ def gpd_var_calculator(threshold, scale_param, shape_param,
         prob_ratio = (total_n/exceedance_n) * probability
         result = threshold + (param_ratio *
                               (pow(prob_ratio, -shape_param) - 1))
-    return result
-
-
-def gpd_loglikelihood_minimizer_aligned(price_data):
-    result = [False, False]
-    DEFAULT_SCALE_PARAM = 1
-    DEFAULT_SHAPE_PARAM = 1
-    if (len(price_data) > 0):
-        gpd_loglikelihood_lambda = \
-            gpd_loglikelihood_factory(price_data)
-        optimization_results = \
-            optimize.minimize(gpd_loglikelihood_lambda,
-                              [DEFAULT_SCALE_PARAM,
-                               DEFAULT_SHAPE_PARAM],
-                              method='Nelder-Mead')
-        if optimization_results.success:
-            resulting_params = optimization_results.x
-            if len(resulting_params) == 2:
-                result[0] = resulting_params[0]
-                result[1] = resulting_params[1]
     return result
 
 
@@ -2147,12 +2096,9 @@ SIMPLE_STAT_FUNCS = [
     annual_volatility,
     sharpe_ratio,
     calmar_ratio,
-    stability_of_timeseries,
     max_drawdown,
     omega_ratio,
     sortino_ratio,
-    stats.skew,
-    stats.kurtosis,
     tail_ratio,
     cagr,
     value_at_risk,

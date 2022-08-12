@@ -14,10 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from setuptools import setup
+
 import versioneer
 
-
-DISTNAME = "empyrical"
 DESCRIPTION = """empyrical is a Python library with performance and risk \
 statistics commonly used in quantitative finance"""
 LONG_DESCRIPTION = """empyrical is a Python library with performance and risk
@@ -46,36 +45,21 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Mathematics",
-    "Operating System :: OS Independent"
+    "Operating System :: OS Independent",
 ]
 
 
-test_reqs = [
-    "nose>=1.3.7",
-    "parameterized>=0.6.1"
-]
+test_reqs = ["nose>=1.3.7", "parameterized>=0.6.1"]
 
 
-requirements = [
-    'numpy>=1.9.2',
-    'pandas>=0.16.1',
-    'scipy>=0.15.1',
-    'six',
-    "pandas-datareader>=0.2"
-]
+requirements = ["numpy>=1.9.2", "pandas>=0.16.1", "six", "pandas-datareader>=0.2"]
 
-extras_requirements = {
-    "dev": [
-        "nose==1.3.7",
-        "parameterized==0.6.1",
-        "flake8==2.5.1"
-    ]
-}
+extras_requirements = {"dev": ["nose==1.3.7", "parameterized==0.6.1", "flake8==2.5.1"]}
 
 
 if __name__ == "__main__":
     setup(
-        name=DISTNAME,
+        name="merq_empyrical_noscipy",
         cmdclass=versioneer.get_cmdclass(),
         version=versioneer.get_version(),
         maintainer=MAINTAINER,
@@ -89,5 +73,5 @@ if __name__ == "__main__":
         install_requires=requirements,
         extras_require=extras_requirements,
         tests_require=test_reqs,
-        test_suite="nose.collector"
+        test_suite="nose.collector",
     )
